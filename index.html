@@ -1,0 +1,626 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cotización | M3G Consultores</title>
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --surface: #fffdf8;
+      --ink: #1f2430;
+      --muted: #5d6472;
+      --brand: #0f5f54;
+      --brand-soft: #d7ebe7;
+      --line: #dfd7c8;
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(31, 36, 48, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 0% 0%, #efe6d7 0, transparent 35%),
+        radial-gradient(circle at 100% 100%, #d7ebe7 0, transparent 36%),
+        var(--bg);
+      line-height: 1.45;
+    }
+
+    .page {
+      width: min(980px, 92vw);
+      margin: 28px auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .top {
+      padding: 28px 30px;
+      background: linear-gradient(130deg, #123934, #0f5f54 60%, #1b7d6f);
+      color: #f2f7f6;
+      position: relative;
+    }
+
+    .top::after {
+      content: "";
+      position: absolute;
+      right: -35px;
+      top: -35px;
+      width: 150px;
+      height: 150px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .brand {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .brand h1 {
+      margin: 0;
+      letter-spacing: 0.03em;
+      font-size: clamp(1.5rem, 1.8vw + 1rem, 2.1rem);
+      font-weight: 700;
+    }
+    .brand-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-badge {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .muted-on-dark {
+      margin: 6px 0 0;
+      color: rgba(242, 247, 246, 0.9);
+      font-size: 0.96rem;
+    }
+
+    .lang-toggle {
+      border: 1px solid rgba(255,255,255,.5);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border-radius: 999px;
+      padding: 5px;
+      display: inline-flex;
+      gap: 4px;
+      align-self: start;
+    }
+
+    .lang-toggle button {
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      cursor: pointer;
+      background: transparent;
+      color: #e8f4f1;
+      font-weight: 600;
+    }
+
+    .lang-toggle button.active {
+      background: #fff;
+      color: #12443d;
+    }
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .pdf-btn {
+      border: 1px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.12);
+      color: #f5fffd;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .pdf-btn:hover {
+      background: rgba(255,255,255,.2);
+    }
+
+    .body {
+      padding: 26px 30px 34px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: #fff;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.06rem;
+      letter-spacing: .01em;
+    }
+    .subhead {
+      margin: 10px 0 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e3f38;
+      letter-spacing: .01em;
+    }
+    .intro-card {
+      background: linear-gradient(180deg, #fffef9, #f8f3ea);
+      border-color: #d8cfbd;
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .intro-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+    .lead-note {
+      margin: 8px 0 0;
+      color: #31423f;
+      font-size: 0.95rem;
+    }
+    .scope-note {
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      border: 1px solid #d84b4b;
+      border-left: 6px solid #c62828;
+      border-radius: 14px;
+      background: #fff3f3;
+      color: #8f1f1f;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .scope-table td:first-child {
+      width: 110px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+    .scope-block + .scope-block {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #eee7d8;
+    }
+    .scope-title {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+      color: #182923;
+      font-weight: 700;
+    }
+    .scope-copy {
+      margin: 0;
+      color: #2c352f;
+      font-size: 0.92rem;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .meta div {
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      background: #fffcf6;
+    }
+
+    .k {
+      font-size: .74rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+
+    .v {
+      font-size: .96rem;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .93rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    thead th {
+      background: #f4f8f7;
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      color: #244139;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee7d8;
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+
+    .totals {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .pill {
+      background: var(--brand-soft);
+      border: 1px solid #b9dbd4;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .pill .k { color: #325a52; }
+    .pill .v { color: #123c35; }
+
+    .grand {
+      background: #123934;
+      color: #f6fffd;
+      border-color: #123934;
+    }
+    .grand .k { color: rgba(246, 255, 253, 0.78); }
+    .grand .v { color: #ffffff; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .fine {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .8rem;
+      background: #fff2dc;
+      color: #7e560f;
+      border: 1px solid #efd9af;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 8px;
+    }
+
+    .lang-es, .lang-en { display: none; }
+    html[data-lang="es"] .lang-es { display: block; }
+    html[data-lang="en"] .lang-en { display: block; }
+    html[data-lang="es"] .lang-es.inline,
+    html[data-lang="en"] .lang-en.inline { display: inline; }
+
+    @media (max-width: 760px) {
+      .meta { grid-template-columns: 1fr; }
+      .totals { grid-template-columns: 1fr; }
+      .intro-grid { grid-template-columns: 1fr; }
+      .top, .body { padding: 20px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0;
+        width: 100%;
+        box-shadow: none;
+        border: 0;
+      }
+      .lang-toggle { display: none; }
+      .pdf-btn { display: none; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <div class="brand">
+        <div class="brand-main">
+          <img
+            class="logo-badge"
+            src="https://static.wixstatic.com/media/492872_a9026c3441964b9ea2a014b49c59e37b~mv2.png/v1/fill/w_94,h_94,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/M3G%20R.png"
+            alt="Logo M3G Consultores"
+          />
+          <div>
+            <h1 class="lang-es">COTIZACIÓN DE CAPACITACIÓN</h1>
+            <h1 class="lang-en">TRAINING QUOTATION</h1>
+            <p class="muted-on-dark lang-es">M3G Consultores | Seguridad e Higiene</p>
+            <p class="muted-on-dark lang-en">M3G Consultores | Safety and Hygiene</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <div class="lang-toggle" aria-label="Language switcher">
+            <button id="btn-es" class="active" type="button">ES</button>
+            <button id="btn-en" type="button">EN</button>
+          </div>
+          <button id="btn-pdf" class="pdf-btn" type="button">
+            <span class="lang-es inline">Descargar PDF</span>
+            <span class="lang-en inline">Download PDF</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="body">
+      <article class="card intro-card">
+        <span class="badge lang-es">Ajustes solicitados por el cliente</span>
+        <span class="badge lang-en">Client-requested revision</span>
+        <h2 class="lang-es">Nueva propuesta operativa</h2>
+        <h2 class="lang-en">Revised operating proposal</h2>
+        <p class="lead-note lang-es">Esta versión considera únicamente 2 cursos por mes. Curso 1 se imparte de 8:00 a 10:00 am y Curso 2 de 8:00 a 11:00 am, en viernes de la primera y tercera semana de cada mes.</p>
+        <p class="lead-note lang-en">This revision considers only 2 courses per month. Course 1 is delivered from 8:00 to 10:00 am and Course 2 from 8:00 to 11:00 am, on the Friday of the first and third week of each month.</p>
+        <div class="intro-grid">
+          <div class="intro-item">
+            <div class="k lang-es">Secuencia mensual</div>
+            <div class="k lang-en">Monthly sequence</div>
+            <div class="v lang-es">Primera semana: Curso 1. Tercera semana: Curso 2.</div>
+            <div class="v lang-en">First week: Course 1. Third week: Course 2.</div>
+          </div>
+          <div class="intro-item">
+            <div class="k lang-es">Espacios y aforo</div>
+            <div class="k lang-en">Rooms and capacity</div>
+            <div class="v lang-es">Se prevé reunir grupos de distintas áreas y localidades en los salones 5 y 6, con capacidad aproximada para 50 personas.</div>
+            <div class="v lang-en">The intent is to consolidate groups from different areas and locations in rooms 5 and 6, with approximate capacity for 50 people.</div>
+          </div>
+          <div class="intro-item">
+            <div class="k lang-es">Validación previa</div>
+            <div class="k lang-en">Pre-validation</div>
+            <div class="v lang-es">La semana previa se realizará una llamada en viernes para confirmar el aula asignada y la cantidad de empleados a capacitar.</div>
+            <div class="v lang-en">The previous week, a Friday call will be held to confirm the assigned classroom and the final number of employees to be trained.</div>
+          </div>
+          <div class="intro-item">
+            <div class="k lang-es">Inicio estimado</div>
+            <div class="k lang-en">Estimated start</div>
+            <div class="v lang-es">Inicio tentativo en abril, sujeto a confirmación del cliente.</div>
+            <div class="v lang-en">Tentative start in April, subject to client confirmation.</div>
+          </div>
+        </div>
+        <div class="subhead lang-es">Escenario solicitado en esta revisión</div>
+        <div class="subhead lang-en">Requested scenario in this revision</div>
+        <p class="fine lang-es">Facturación mensual base de $14,000 MXN más IVA, dentro de un esquema anual de OC.</p>
+        <p class="fine lang-en">Base monthly billing of CAD $1,072.42 plus tax, under an annual PO structure.</p>
+        <p class="fine lang-en">Exchange rate used for this section: 1 CAD = 13.0546 MXN.</p>
+        <div class="totals">
+          <div class="pill">
+            <div class="k lang-es">Mensual sin IVA</div>
+            <div class="k lang-en">Monthly before tax</div>
+            <div class="v"><span class="lang-es inline">$14,000 MXN</span><span class="lang-en inline">CAD $1,072.42</span></div>
+          </div>
+          <div class="pill">
+            <div class="k lang-es">IVA / Impuesto 16%</div>
+            <div class="k lang-en">Tax 16%</div>
+            <div class="v"><span class="lang-es inline">$2,240 MXN</span><span class="lang-en inline">CAD $171.59</span></div>
+          </div>
+          <div class="pill">
+            <div class="k lang-es">Total mensual</div>
+            <div class="k lang-en">Monthly total</div>
+            <div class="v"><span class="lang-es inline">$16,240 MXN</span><span class="lang-en inline">CAD $1,244.01</span></div>
+          </div>
+          <div class="pill grand">
+            <div class="k lang-es">Total anual</div>
+            <div class="k lang-en">Annual total</div>
+            <div class="v"><span class="lang-es inline">$194,880 MXN</span><span class="lang-en inline">CAD $14,928.07</span></div>
+          </div>
+        </div>
+        <p class="fine lang-es">Cálculo anual: $14,000 x 12 = $168,000 MXN; IVA 16% = $26,880 MXN; total anual = $194,880 MXN.</p>
+        <p class="fine lang-en">Annual calculation: CAD $1,072.42 x 12 = CAD $12,869.03; 16% tax = CAD $2,059.04; annual total = CAD $14,928.07.</p>
+      </article>
+
+      <article class="card">
+        <h2 class="lang-es">Datos Generales</h2>
+        <h2 class="lang-en">General Information</h2>
+        <div class="meta">
+          <div>
+            <div class="k lang-es">Cliente</div>
+            <div class="k lang-en">Client</div>
+            <div class="v">KCSM Centro de Capacitación</div>
+          </div>
+          <div>
+            <div class="k lang-es">Ubicación</div>
+            <div class="k lang-en">Location</div>
+            <div class="v">San Luis Potosí</div>
+          </div>
+          <div>
+            <div class="k lang-es">Modalidad</div>
+            <div class="k lang-en">Mode</div>
+            <div class="v lang-es">Subcontrato de capacitación presencial para Normas STPS</div>
+            <div class="v lang-en">In-person training subcontract for STPS standards</div>
+          </div>
+          <div>
+            <div class="k lang-es">Duración</div>
+            <div class="k lang-en">Duration</div>
+            <div class="v lang-es">Contrato anual (2 cursos por mes; Curso 1 de 8:00 a 10:00 am y Curso 2 de 8:00 a 11:00 am)</div>
+            <div class="v lang-en">Annual contract (2 courses per month; Course 1 from 8:00 to 10:00 am and Course 2 from 8:00 to 11:00 am)</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="lang-es">Alcance de Cursos</h2>
+        <h2 class="lang-en">Course Scope</h2>
+        <p class="scope-note lang-es">Debido a que se dispone de tiempo muy limitado para impartir las capacitaciones, el alcance de los cursos está limitado a cumplir con los temas mínimos especificados en cada norma para el personal en general. NO INCLUYE: Capacitación de brigadistas, ni para realizar estudios, ni análisis de riesgos.</p>
+        <p class="scope-note lang-en">Because the time available to deliver training is very limited, the course scope is restricted to the minimum topics specified in each standard for general personnel. NOT INCLUDED: brigade member training, studies, or risk analyses.</p>
+        <table class="scope-table">
+          <tbody>
+            <tr>
+              <td><span class="lang-es inline">Curso 1</span><span class="lang-en inline">Course 1</span></td>
+              <td>
+                <div class="scope-block lang-es">
+                  <p class="scope-title">NOM-017-STPS-2008 Equipo de protección personal</p>
+                  <p class="scope-copy"><strong>5.9</strong> Proporcionar a las personas trabajadoras la capacitación y adiestramiento para identificar el equipo de protección personal que deben utilizar conforme al riesgo al que están expuestas, así como para el uso, revisión, reposición, limpieza, limitaciones, mantenimiento, resguardo y disposición final del equipo de protección personal, con base en las indicaciones, instrucciones o procedimientos para tal efecto, así como las recomendaciones del fabricante de dicho equipo de protección personal.</p>
+                </div>
+                <div class="scope-block lang-es">
+                  <p class="scope-title">NOM-018-STPS-2015 Hojas de datos de seguridad y sistema SGA</p>
+                  <p class="scope-copy"><strong>11.2</strong> La capacitación y adiestramiento que se proporcione a todos los trabajadores involucrados en el manejo de sustancias químicas peligrosas y mezclas, e integrantes de la comisión de seguridad e higiene, deberá considerar al menos, los temas siguientes:<br /><strong>a)</strong> Las 16 secciones de la hoja de datos de seguridad referidos en el numeral 9.2 de la presente Norma, y<br /><strong>b)</strong> Los elementos de la señalización establecidos en el numeral 10.5 de esta Norma.</p>
+                </div>
+                <div class="scope-block lang-en">
+                  <p class="scope-title">NOM-017-STPS-2008 Personal protective equipment</p>
+                  <p class="scope-copy"><strong>5.9</strong> Provide workers with training to identify the personal protective equipment they must use according to the risk to which they are exposed, as well as its use, inspection, replacement, cleaning, limitations, maintenance, safekeeping and final disposal, based on the applicable instructions or procedures and the manufacturer's recommendations.</p>
+                </div>
+                <div class="scope-block lang-en">
+                  <p class="scope-title">NOM-018-STPS-2015 Safety data sheets and GHS system</p>
+                  <p class="scope-copy"><strong>11.2</strong> Training for all workers involved in handling hazardous chemicals and mixtures, as well as members of the safety and hygiene committee, must include at least the following topics:<br /><strong>a)</strong> The 16 sections of the safety data sheet referred to in section 9.2 of this Standard, and<br /><strong>b)</strong> The signage elements established in section 10.5 of this Standard.</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="lang-es inline">Curso 2</span><span class="lang-en inline">Course 2</span></td>
+              <td>
+                <div class="scope-block lang-es">
+                  <p class="scope-title">NOM-002-STPS-2010 Combate contra incendios</p>
+                  <p class="scope-copy"><strong>11.1</strong> Los trabajadores deberán ser capacitados para prevenir incendios en el centro de trabajo, de acuerdo con los riesgos de incendio que se pueden presentar en sus áreas o puestos de trabajo, en los aspectos básicos de riesgos de incendio y conceptos del fuego.<br /><strong>11.2</strong> Los trabajadores deberán recibir entrenamiento teórico-práctico, según aplique, para:<br /><strong>a)</strong> Manejar los extintores<br /><strong>b)</strong> Actuar conforme al plan de atención a emergencias de incendio;<br /><strong>e)</strong> Identificar un fuego incipiente y combatirlo, así como activar el procedimiento de alertamiento, y<br /><strong>f)</strong> Conducir a visitantes del centro de trabajo a simulacros o en casos de emergencia de incendios, a un lugar seguro.</p>
+                </div>
+                <div class="scope-block lang-es">
+                  <p class="scope-title">NOM-026-STPS-2008 Colores y Señales de Seguridad</p>
+                  <p class="scope-copy"><strong>5.2</strong> Proporcionar capacitación a los trabajadores sobre la correcta interpretación de los elementos de señalización del centro de trabajo.</p>
+                </div>
+                <div class="scope-block lang-es">
+                  <p class="scope-title">NORMA Oficial Mexicana NOM-036-1-STPS-2018, Factores de riesgo ergonómico. Parte 1: Manejo manual de cargas.</p>
+                  <p class="scope-copy"><strong>10.1</strong> Al personal ocupacionalmente expuesto a los factores de riesgo ergonómico referido al sobreesfuerzo físico por el manejo manual de cargas, se le deberá proporcionar capacitación, con énfasis en la prevención de riesgos, y con base en las tareas asignadas. La capacitación y adiestramiento proporcionados a los trabajadores deberá consistir en una instrucción teórica, entrenamiento práctico y evaluación de los conocimientos y habilidades adquiridos, y considerar lo siguiente:<br /><strong>a)</strong> Los efectos a la salud que puede ocasionar la exposición a los factores de riesgo ergonómico debido al manejo manual de cargas;<br /><strong>b)</strong> La forma de reconocer factores de riesgo ergonómico por el manejo manual de cargas, así como riesgos adicionales presentes en el lugar de trabajo;</p>
+                </div>
+                <div class="scope-block lang-en">
+                  <p class="scope-title">NOM-002-STPS-2010 Fire prevention and firefighting</p>
+                  <p class="scope-copy"><strong>11.1</strong> Workers must be trained to prevent fires in the workplace according to the fire risks present in their work areas or positions, covering the basic aspects of fire risk and fire concepts.<br /><strong>11.2</strong> Workers must receive theoretical-practical training, as applicable, to:<br /><strong>a)</strong> Use fire extinguishers;<br /><strong>b)</strong> Act in accordance with the fire emergency response plan;<br /><strong>e)</strong> Identify and fight an incipient fire, as well as activate the alert procedure; and<br /><strong>f)</strong> Guide workplace visitors during drills or real fire emergencies to a safe place.</p>
+                </div>
+                <div class="scope-block lang-en">
+                  <p class="scope-title">NOM-026-STPS-2008 Safety colors and signage</p>
+                  <p class="scope-copy"><strong>5.2</strong> Provide workers with training on the correct interpretation of workplace signage elements.</p>
+                </div>
+                <div class="scope-block lang-en">
+                  <p class="scope-title">Official Mexican Standard NOM-036-1-STPS-2018, Ergonomic risk factors. Part 1: Manual handling of loads.</p>
+                  <p class="scope-copy"><strong>10.1</strong> Personnel occupationally exposed to ergonomic risk factors related to physical overexertion from manual handling of loads must receive training focused on risk prevention and based on assigned tasks. Training must include theoretical instruction, practical training, and evaluation of acquired knowledge and skills, considering the following:<br /><strong>a)</strong> Health effects caused by exposure to ergonomic risk factors due to manual handling of loads;<br /><strong>b)</strong> How to identify ergonomic risk factors associated with manual handling of loads, as well as additional hazards present in the workplace;</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="fine lang-es">Curso 1 se imparte el viernes de la primera semana del mes de 8:00 a 10:00 am. Curso 2 se imparte el viernes de la tercera semana de 8:00 a 11:00 am.</p>
+        <p class="fine lang-en">Course 1 is delivered on the first Friday of the month from 8:00 to 10:00 am. Course 2 is delivered on the third Friday from 8:00 to 11:00 am.</p>
+      </article>
+
+      <article class="card">
+        <h2 class="lang-es">Condiciones Comerciales</h2>
+        <h2 class="lang-en">Commercial Terms</h2>
+        <div class="meta">
+          <div>
+            <div class="k lang-es">Vigencia de cotización</div>
+            <div class="k lang-en">Quotation validity</div>
+            <div class="v"><span class="lang-es inline">30 días naturales</span><span class="lang-en inline">30 calendar days</span></div>
+          </div>
+          <div>
+            <div class="k lang-es">Forma de pago</div>
+            <div class="k lang-en">Payment terms</div>
+            <div class="v"><span class="lang-es inline">Pagos mensuales con crédito a 30 días en cada factura</span><span class="lang-en inline">Monthly payments with net 30 days on each invoice</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge lang-es">Entregables y Responsabilidades</span>
+        <span class="badge lang-en">Deliverables and Responsibilities</span>
+        <ul class="lang-es">
+          <li>Se entregará material del curso en formato electrónico.</li>
+          <li>Se entregará por parte de M3G un tríptico informativo.</li>
+          <li>La elaboración de constancias laborales (DC3) correrá por parte de M3G.</li>
+          <li>Las DC3 serán firmadas por el Ing. German Mireles Contreras como instructor interno.</li>
+          <li>Para el personal no sindicalizado les ofrecemos los mismos cursos dentro de nuestra plataforma online.</li>
+          <li>Las demás capacitaciones de normas solicitadas por la Secretaría del Trabajo deberán ser solicitadas a los departamentos que les apliquen.</li>
+        </ul>
+        <ul class="lang-en">
+          <li>Course material will be delivered in electronic format.</li>
+          <li>M3G will provide an informational tri-fold brochure.</li>
+          <li>Preparation of labor certificates (DC3) will be handled by M3G.</li>
+          <li>DC3 certificates will be signed by Eng. German Mireles Contreras as internal instructor.</li>
+          <li>For non-union personnel, we offer the same courses through our online platform.</li>
+          <li>Any additional training on standards requested by the Ministry of Labor must be requested from the departments to which they apply.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2 class="lang-es">Credenciales que Avalan el Servicio</h2>
+        <h2 class="lang-en">Credentials Supporting This Service</h2>
+        <ul class="lang-es">
+          <li>M3G Consultores cuenta con registro REPSE AR 161484/2024 con vigencia de 3 años.</li>
+          <li>M3G Consultores cuenta con registro CONOCER como Centro Evaluador de Competencias Laborales CE0070-OC085-20.</li>
+          <li>M3G Consultores cuenta con registro como Agente Capacitador Externo STPS MTG-040310-PD3-0013.</li>
+          <li>Personal certificado en Seguridad y Salud en el Trabajo, Safety on Cranes, sistema KYT, servicios contra incendios, Incident Commander, Hazardous Materials, vigilancia normativa STPS, evaluación de competencias, impartición y diseño de cursos, y sistemas de trabajo en alturas Hawk.</li>
+        </ul>
+        <ul class="lang-en">
+          <li>M3G Consultores holds REPSE registration AR 161484/2024, valid for 3 years.</li>
+          <li>M3G Consultores is registered with CONOCER as a Labor Competency Assessment Center CE0070-OC085-20.</li>
+          <li>M3G Consultores is registered as an External Training Agent before STPS: MTG-040310-PD3-0013.</li>
+          <li>Certified personnel in Occupational Safety and Health, Safety on Cranes, KYT risk prediction system, fire services, Incident Commander, Hazardous Materials, STPS compliance monitoring, competency assessment, in-person course delivery and design, and Hawk work-at-heights systems installation.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2 class="lang-es">Aceptación</h2>
+        <h2 class="lang-en">Acceptance</h2>
+        <div class="meta">
+          <div>
+            <div class="k lang-es">Proveedor</div>
+            <div class="k lang-en">Provider</div>
+            <div class="v">M3G Consultores</div>
+          </div>
+          <div>
+            <div class="k lang-es">Cliente</div>
+            <div class="k lang-en">Client</div>
+            <div class="v">KCSM Centro de Capacitación</div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const btnEs = document.getElementById("btn-es");
+    const btnEn = document.getElementById("btn-en");
+    const btnPdf = document.getElementById("btn-pdf");
+
+    function setLanguage(lang) {
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.lang = lang;
+      btnEs.classList.toggle("active", lang === "es");
+      btnEn.classList.toggle("active", lang === "en");
+    }
+
+    btnEs.addEventListener("click", () => setLanguage("es"));
+    btnEn.addEventListener("click", () => setLanguage("en"));
+    btnPdf.addEventListener("click", () => window.print());
+
+    setLanguage("es");
+  </script>
+</body>
+</html>
